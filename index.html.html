@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encuesta de Satisfacci&#243;n | Hope for Kids</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F8F6FB;min-height:100vh;padding:20px 16px}
+.container{max-width:640px;margin:0 auto}
+.header{text-align:center;padding:32px 20px 24px;background:#fff;border-radius:16px 16px 0 0;border-bottom:3px solid #8B6AAD}
+.logo-text{font-size:32px;font-weight:700;color:#8B6AAD;letter-spacing:1px}
+.logo-sub{font-size:14px;color:#E8A0BF;font-weight:500;margin-top:2px}
+.header p.intro{font-size:14px;color:#666;margin-top:16px;line-height:1.6;text-align:left;padding:0 8px}
+.header .divider{height:3px;background:linear-gradient(90deg,#E8A0BF,#8B6AAD,#D4A84B);border-radius:2px;margin-top:16px}
+.body-form{background:#fff;padding:8px 20px 32px;border-radius:0 0 16px 16px}
+.question{margin-top:24px;padding:20px;background:#FAFAFA;border-radius:12px;border-left:4px solid #8B6AAD}
+.question:nth-child(even){border-left-color:#E8A0BF}
+.question:nth-child(3n){border-left-color:#D4A84B}
+.q-number{display:inline-block;background:#8B6AAD;color:#fff;font-size:12px;font-weight:600;width:24px;height:24px;border-radius:50%;text-align:center;line-height:24px;margin-right:8px}
+.q-title{font-size:15px;font-weight:600;color:#2D2D2D;display:inline}
+.q-desc{font-size:13px;color:#888;margin-top:6px;line-height:1.5}
+.stars{display:flex;gap:4px;margin-top:12px}
+.star{font-size:32px;cursor:pointer;color:#D0C4E0;transition:color .15s,transform .15s;user-select:none}
+.star:hover,.star.active{color:#D4A84B}
+.star:hover{transform:scale(1.15)}
+.star-label{display:flex;justify-content:space-between;margin-top:4px}
+.star-label span{font-size:11px;color:#AAA}
+.radio-group{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.radio-option{display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 14px;border-radius:8px;border:1.5px solid #E8E4EE;transition:all .15s;font-size:14px;color:#444}
+.radio-option:hover{border-color:#8B6AAD;background:#F8F4FC}
+.radio-option.selected{border-color:#8B6AAD;background:#F3EEF8;color:#8B6AAD;font-weight:500}
+.radio-option input{display:none}
+.radio-dot{width:18px;height:18px;border-radius:50%;border:2px solid #D0C4E0;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.radio-option.selected .radio-dot{border-color:#8B6AAD}
+.radio-dot::after{content:'';width:10px;height:10px;border-radius:50%;background:#8B6AAD;transform:scale(0);transition:transform .15s}
+.radio-option.selected .radio-dot::after{transform:scale(1)}
+.nps-row{display:flex;gap:4px;margin-top:12px;justify-content:space-between}
+.nps-btn{width:100%;max-width:48px;aspect-ratio:1;border-radius:8px;border:1.5px solid #E8E4EE;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;color:#888;cursor:pointer;transition:all .15s;background:#fff}
+.nps-btn:hover{border-color:#8B6AAD;background:#F8F4FC}
+.nps-btn.det{background:#FCEBEB;color:#A32D2D;border-color:#F09595}
+.nps-btn.pas{background:#FAEEDA;color:#854F0B;border-color:#FAC775}
+.nps-btn.pro{background:#EAF3DE;color:#3B6D11;border-color:#C0DD97}
+.nps-labels{display:flex;justify-content:space-between;margin-top:6px}
+.nps-labels span{font-size:11px;color:#AAA}
+.check-group{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.check-option{display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 14px;border-radius:8px;border:1.5px solid #E8E4EE;transition:all .15s;font-size:14px;color:#444}
+.check-option:hover{border-color:#8B6AAD;background:#F8F4FC}
+.check-option.checked{border-color:#8B6AAD;background:#F3EEF8;color:#8B6AAD;font-weight:500}
+.check-box{width:18px;height:18px;border-radius:4px;border:2px solid #D0C4E0;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;font-size:11px;color:transparent}
+.check-option.checked .check-box{border-color:#8B6AAD;background:#8B6AAD;color:#fff}
+textarea{width:100%;min-height:80px;border:1.5px solid #E8E4EE;border-radius:8px;padding:12px 14px;font-family:inherit;font-size:14px;color:#444;resize:vertical;outline:none;margin-top:12px;transition:border-color .15s}
+textarea:focus{border-color:#8B6AAD}
+textarea::placeholder{color:#BBB}
+.submit-area{text-align:center;margin-top:32px;padding-top:24px;border-top:2px solid #F3EEF8}
+.submit-btn{background:linear-gradient(135deg,#8B6AAD,#A47EC5);color:#fff;border:none;padding:14px 48px;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;transition:all .2s;letter-spacing:.5px}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(139,106,173,.35)}
+.submit-btn:active{transform:translateY(0)}
+.submit-note{font-size:12px;color:#AAA;margin-top:10px}
+.footer{text-align:center;padding:20px;font-size:12px;color:#AAA;margin-top:8px}
+.footer a{color:#8B6AAD;text-decoration:none}
+.success-msg{display:none;text-align:center;padding:60px 20px;background:#fff;border-radius:16px;margin-top:20px}
+.success-msg .icon{font-size:64px;margin-bottom:16px}
+.success-msg h2{color:#8B6AAD;font-size:24px;margin-bottom:8px}
+.success-msg p{color:#666;font-size:15px;line-height:1.6}
+.success-msg .discount{display:inline-block;margin-top:20px;background:#F3EEF8;color:#8B6AAD;font-size:28px;font-weight:700;padding:16px 32px;border-radius:12px;border:2px dashed #8B6AAD;letter-spacing:2px}
+.success-msg .discount-note{font-size:13px;color:#888;margin-top:8px}
+.required-note{font-size:12px;color:#C0392B;margin-top:4px;display:none}
+@media(max-width:480px){
+  body{padding:12px 8px}
+  .header{padding:24px 16px 20px}
+  .logo-text{font-size:26px}
+  .body-form{padding:8px 14px 24px}
+  .question{padding:16px}
+  .star{font-size:28px}
+  .nps-btn{font-size:12px}
+  .submit-btn{padding:12px 36px;font-size:15px}
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="formContainer">
+  <div class="header">
+    <div class="logo-text">HOPE FOR KIDS</div>
+    <div class="logo-sub">HOPE 4 KIDS CARE</div>
+    <div class="divider"></div>
+    <p class="intro">Querida familia, en <strong>Hope for Kids</strong> buscamos brindarte siempre la mejor atenci&#243;n. Esta encuesta es <strong>an&#243;nima</strong> y toma <strong>menos de 2 minutos</strong>. Tu opini&#243;n nos ayuda a cuidar mejor de tus peque&#241;os. &#161;Gracias!</p>
+  </div>
+
+  <div class="body-form">
+
+    <div class="question" id="q1-block">
+      <span class="q-number">1</span>
+      <span class="q-title">&#191;C&#243;mo calificas la atenci&#243;n del m&#233;dico?</span>
+      <p class="q-desc">Trato humano, claridad al explicarte el diagn&#243;stico, paciencia con tu hijo(a) y la confianza que te gener&#243;.</p>
+      <div class="stars" data-q="q1">
+        <span class="star" data-v="1">&#9733;</span>
+        <span class="star" data-v="2">&#9733;</span>
+        <span class="star" data-v="3">&#9733;</span>
+        <span class="star" data-v="4">&#9733;</span>
+        <span class="star" data-v="5">&#9733;</span>
+      </div>
+      <div class="star-label"><span>Mala</span><span>Excelente</span></div>
+      <p class="required-note" id="q1-req">Por favor selecciona una calificaci&#243;n</p>
+    </div>
+
+    <div class="question" id="q2-block">
+      <span class="q-number">2</span>
+      <span class="q-title">&#191;C&#243;mo calificas la atenci&#243;n en recepci&#243;n?</span>
+      <p class="q-desc">Amabilidad de Valeria y Astrid, rapidez en el registro, informaci&#243;n clara sobre costos y tiempos de espera.</p>
+      <div class="stars" data-q="q2">
+        <span class="star" data-v="1">&#9733;</span>
+        <span class="star" data-v="2">&#9733;</span>
+        <span class="star" data-v="3">&#9733;</span>
+        <span class="star" data-v="4">&#9733;</span>
+        <span class="star" data-v="5">&#9733;</span>
+      </div>
+      <div class="star-label"><span>Mala</span><span>Excelente</span></div>
+      <p class="required-note" id="q2-req">Por favor selecciona una calificaci&#243;n</p>
+    </div>
+
+    <div class="question" id="q3-block">
+      <span class="q-number">3</span>
+      <span class="q-title">&#191;C&#243;mo calificas nuestras instalaciones?</span>
+      <p class="q-desc">Limpieza, comodidad de la sala de espera, ambiente infantil agradable, consultorios bien equipados.</p>
+      <div class="stars" data-q="q3">
+        <span class="star" data-v="1">&#9733;</span>
+        <span class="star" data-v="2">&#9733;</span>
+        <span class="star" data-v="3">&#9733;</span>
+        <span class="star" data-v="4">&#9733;</span>
+        <span class="star" data-v="5">&#9733;</span>
+      </div>
+      <div class="star-label"><span>Mala</span><span>Excelente</span></div>
+      <p class="required-note" id="q3-req">Por favor selecciona una calificaci&#243;n</p>
+    </div>
+
+    <div class="question" id="q4-block">
+      <span class="q-number">4</span>
+      <span class="q-title">&#191;Cu&#225;nto tiempo esperaste antes de pasar a consulta?</span>
+      <p class="q-desc">Desde que llegaste a recepci&#243;n hasta que el m&#233;dico te recibi&#243;.</p>
+      <div class="radio-group" data-q="q4">
+        <div class="radio-option" data-v="Menos de 10 minutos">
+          <span class="radio-dot"></span>
+          <span>Menos de 10 minutos</span>
+        </div>
+        <div class="radio-option" data-v="10 a 20 minutos">
+          <span class="radio-dot"></span>
+          <span>10 a 20 minutos</span>
+        </div>
+        <div class="radio-option" data-v="20 a 30 minutos">
+          <span class="radio-dot"></span>
+          <span>20 a 30 minutos</span>
+        </div>
+        <div class="radio-option" data-v="M&#225;s de 30 minutos">
+          <span class="radio-dot"></span>
+          <span>M&#225;s de 30 minutos</span>
+        </div>
+      </div>
+      <p class="required-note" id="q4-req">Por favor selecciona una opci&#243;n</p>
+    </div>
+
+    <div class="question" id="q5-block">
+      <span class="q-number">5</span>
+      <span class="q-title">&#191;Qu&#233; tan probable es que nos recomiendes?</span>
+      <p class="q-desc">Del 0 al 10, &#191;qu&#233; tan seguro(a) est&#225;s de recomendar Hope for Kids a otra familia?</p>
+      <div class="nps-row" data-q="q5">
+        <span class="nps-btn" data-v="0">0</span>
+        <span class="nps-btn" data-v="1">1</span>
+        <span class="nps-btn" data-v="2">2</span>
+        <span class="nps-btn" data-v="3">3</span>
+        <span class="nps-btn" data-v="4">4</span>
+        <span class="nps-btn" data-v="5">5</span>
+        <span class="nps-btn" data-v="6">6</span>
+        <span class="nps-btn" data-v="7">7</span>
+        <span class="nps-btn" data-v="8">8</span>
+        <span class="nps-btn" data-v="9">9</span>
+        <span class="nps-btn" data-v="10">10</span>
+      </div>
+      <div class="nps-labels"><span>Nada probable</span><span>Totalmente seguro</span></div>
+      <p class="required-note" id="q5-req">Por favor selecciona un n&#250;mero</p>
+    </div>
+
+    <div class="question" id="q6-block">
+      <span class="q-number">6</span>
+      <span class="q-title">&#191;Qu&#233; servicios adicionales te gustar&#237;a que ofreci&#233;ramos?</span>
+      <p class="q-desc">Puedes elegir todas las opciones que quieras.</p>
+      <div class="check-group" data-q="q6">
+        <div class="check-option" data-v="Consultas por videollamada (telemedicina)">
+          <span class="check-box">&#10003;</span>
+          <span>Consultas por videollamada (telemedicina)</span>
+        </div>
+        <div class="check-option" data-v="Laboratorio y toma de muestras en cl&#237;nica">
+          <span class="check-box">&#10003;</span>
+          <span>Laboratorio y toma de muestras en cl&#237;nica</span>
+        </div>
+        <div class="check-option" data-v="Vacunaci&#243;n">
+          <span class="check-box">&#10003;</span>
+          <span>Vacunaci&#243;n</span>
+        </div>
+        <div class="check-option" data-v="Talleres para padres (primeros auxilios, nutrici&#243;n)">
+          <span class="check-box">&#10003;</span>
+          <span>Talleres para padres (primeros auxilios, nutrici&#243;n)</span>
+        </div>
+        <div class="check-option" data-v="Programa de lealtad y descuentos frecuentes">
+          <span class="check-box">&#10003;</span>
+          <span>Programa de lealtad y descuentos frecuentes</span>
+        </div>
+        <div class="check-option" data-v="Horario extendido (noches o domingos)">
+          <span class="check-box">&#10003;</span>
+          <span>Horario extendido (noches o domingos)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="question" id="q7-block">
+      <span class="q-number">7</span>
+      <span class="q-title">&#191;Hay algo que quieras decirnos para mejorar?</span>
+      <p class="q-desc">Sugerencias, quejas o felicitaciones. Todo nos ayuda a crecer como cl&#237;nica.</p>
+      <textarea id="q7-text" placeholder="Escribe aqu&#237; tu comentario (opcional)..."></textarea>
+    </div>
+
+    <div class="submit-area">
+      <button class="submit-btn" id="submitBtn" onclick="submitForm()">Enviar mi opini&#243;n</button>
+      <p class="submit-note">Tu respuesta es an&#243;nima y confidencial</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Hope 4 Kids Care &bull; Eulogio Parra 3030, Col. Prados de Providencia, Guadalajara, Jal.</p>
+    <p style="margin-top:4px">Tel. <a href="tel:3314551944">33 1455 1944</a> &bull; <a href="mailto:hopeforkids.providencia@gmail.com">hopeforkids.providencia@gmail.com</a></p>
+  </div>
+</div>
+
+<div class="container success-msg" id="successMsg">
+  <div class="icon">&#128156;</div>
+  <h2>&#161;Gracias por tu opini&#243;n!</h2>
+  <p>Tu respuesta nos ayuda a seguir mejorando la atenci&#243;n para tus peque&#241;os. Valoramos mucho que te hayas tomado el tiempo de contestar.</p>
+  <div class="discount">HOPE10</div>
+  <p class="discount-note">Presenta este c&#243;digo en tu pr&#243;xima visita y recibe un <strong>10% de descuento</strong> en consulta.</p>
+  <p style="margin-top:24px;color:#888;font-size:13px">&#191;Conoces a alguien que busque pediatra? Comp&#225;rtenos:</p>
+  <div style="display:flex;gap:12px;justify-content:center;margin-top:12px">
+    <a href="https://wa.me/?text=Te%20recomiendo%20Hope%20for%20Kids%2C%20excelente%20cl%C3%ADnica%20pedi%C3%A1trica%20en%20Guadalajara.%20Tel%3A%2033%201455%201944" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;background:#25D366;color:#fff;border-radius:8px;text-decoration:none;font-size:14px;font-weight:500">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.347 0-4.518-.809-6.24-2.162l-.436-.348-2.684.9.9-2.684-.348-.436A9.956 9.956 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+      Compartir por WhatsApp
+    </a>
+  </div>
+  <div class="footer" style="margin-top:24px">
+    <p>Hope 4 Kids Care &bull; Eulogio Parra 3030, Col. Prados de Providencia, Guadalajara, Jal.</p>
+  </div>
+</div>
+
+<script>
+var answers = {q1:null,q2:null,q3:null,q4:null,q5:null,q6:[],q7:''};
+
+document.querySelectorAll('.stars').forEach(function(group){
+  var q = group.dataset.q;
+  group.querySelectorAll('.star').forEach(function(star){
+    star.addEventListener('click',function(){
+      var val = parseInt(this.dataset.v);
+      answers[q] = val;
+      group.querySelectorAll('.star').forEach(function(s){
+        if(parseInt(s.dataset.v)<=val){s.classList.add('active')}
+        else{s.classList.remove('active')}
+      });
+      document.getElementById(q+'-req').style.display='none';
+    });
+    star.addEventListener('mouseenter',function(){
+      var val=parseInt(this.dataset.v);
+      group.querySelectorAll('.star').forEach(function(s){
+        if(parseInt(s.dataset.v)<=val)s.style.color='#D4A84B';
+        else if(!s.classList.contains('active'))s.style.color='#D0C4E0';
+      });
+    });
+    star.addEventListener('mouseleave',function(){
+      group.querySelectorAll('.star').forEach(function(s){
+        if(!s.classList.contains('active'))s.style.color='#D0C4E0';
+        else s.style.color='#D4A84B';
+      });
+    });
+  });
+});
+
+document.querySelectorAll('.radio-group').forEach(function(group){
+  var q = group.dataset.q;
+  group.querySelectorAll('.radio-option').forEach(function(opt){
+    opt.addEventListener('click',function(){
+      group.querySelectorAll('.radio-option').forEach(function(o){o.classList.remove('selected')});
+      this.classList.add('selected');
+      answers[q] = this.dataset.v;
+      document.getElementById(q+'-req').style.display='none';
+    });
+  });
+});
+
+document.querySelectorAll('.nps-row').forEach(function(group){
+  var q = group.dataset.q;
+  group.querySelectorAll('.nps-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var val = parseInt(this.dataset.v);
+      answers[q] = val;
+      group.querySelectorAll('.nps-btn').forEach(function(b){
+        var bv = parseInt(b.dataset.v);
+        b.className = 'nps-btn';
+        if(bv <= val){
+          if(bv<=6) b.classList.add('det');
+          else if(bv<=8) b.classList.add('pas');
+          else b.classList.add('pro');
+        }
+      });
+      document.getElementById(q+'-req').style.display='none';
+    });
+  });
+});
+
+document.querySelectorAll('.check-group').forEach(function(group){
+  group.querySelectorAll('.check-option').forEach(function(opt){
+    opt.addEventListener('click',function(){
+      this.classList.toggle('checked');
+      answers.q6 = [];
+      group.querySelectorAll('.check-option.checked').forEach(function(c){
+        answers.q6.push(c.dataset.v);
+      });
+    });
+  });
+});
+
+function submitForm(){
+  answers.q7 = document.getElementById('q7-text').value;
+  var valid = true;
+  ['q1','q2','q3'].forEach(function(q){
+    if(!answers[q]){
+      document.getElementById(q+'-req').style.display='block';
+      valid=false;
+    }
+  });
+  if(!answers.q4){document.getElementById('q4-req').style.display='block';valid=false;}
+  if(answers.q5===null){document.getElementById('q5-req').style.display='block';valid=false;}
+
+  if(!valid){
+    var first = document.querySelector('.required-note[style*="block"]');
+    if(first) first.closest('.question').scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+
+  var subject = encodeURIComponent('Respuesta Encuesta Hope for Kids');
+  var bodyLines = [
+    'RESULTADOS DE ENCUESTA DE SATISFACCIÓN',
+    '==========================================',
+    '',
+    '1. Atención del médico: ' + answers.q1 + '/5 estrellas',
+    '2. Atención en recepción: ' + answers.q2 + '/5 estrellas',
+    '3. Instalaciones: ' + answers.q3 + '/5 estrellas',
+    '4. Tiempo de espera: ' + answers.q4,
+    '5. NPS (recomendación): ' + answers.q5 + '/10',
+    '6. Servicios deseados: ' + (answers.q6.length > 0 ? answers.q6.join(', ') : 'Ninguno seleccionado'),
+    '7. Comentarios: ' + (answers.q7 || 'Sin comentarios'),
+    '',
+    '==========================================',
+    'Encuesta enviada el: ' + new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'})
+  ];
+  var bodyText = encodeURIComponent(bodyLines.join('\n'));
+  var mailtoLink = 'mailto:hopeforkids.providencia@gmail.com?subject='+subject+'&body='+bodyText;
+
+  try { window.open(mailtoLink,'_blank'); } catch(e){}
+
+  document.getElementById('formContainer').style.display='none';
+  document.getElementById('successMsg').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
